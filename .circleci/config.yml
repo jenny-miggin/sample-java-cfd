@@ -17,6 +17,18 @@ executors:
           POSTGRES_PASSWORD: password
           POSTGRES_DB: cfd
 
+jobs:
+  do-checkstyle:
+    docker:
+      - image: cimg/openjdk:11.0
+    steps:
+      - checkout
+      - run:
+          name: checkstyle
+          command: |
+            mvn clean install checkstyle:checkstyle
+
+
 workflows:
   verify: # This is the name of the workflow, feel free to change it to better match your workflow.
     # Inside the workflow, you define the jobs you want to run.
@@ -33,4 +45,7 @@ workflows:
             - run:
                 name: Wait for db
                 command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - do-checkstyle:
+          requires:
+            - maven/test
 
