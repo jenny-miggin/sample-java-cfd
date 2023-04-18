@@ -39,7 +39,7 @@ jobs:
       - run:
           name: checkstyle
           command: |
-            mvn clean install checkstyle:checkstyle
+            mvn checkstyle:checkstyle
 
 
 workflows:
