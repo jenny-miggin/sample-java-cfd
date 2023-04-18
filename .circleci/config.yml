@@ -39,7 +39,7 @@ jobs:
       - run:
           name: checkstyle
           command: |
-            mvn checkstyle:checkstyle
+            mvn checkstyle:checkstyle -f xml
 
 
 workflows:
@@ -58,7 +58,5 @@ workflows:
             - run:
                 name: Wait for db
                 command: dockerize -wait tcp://localhost:5432 -timeout 1m
-      - do-checkstyle:
-          requires:
-            - maven/test
+      - do-checkstyle
 
